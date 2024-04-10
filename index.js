@@ -34,7 +34,7 @@ async function run(){
 
         const post = await posts.findOne(query,options)
         console.log(post)
-
+ 
      } finally{
         await client.close();
     }
