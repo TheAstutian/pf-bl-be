@@ -13,6 +13,7 @@ router.get('/', async (req,res) =>{
     
 })
 
+//api for register
 router.post('/register', async(req,res)=>{
 
     const salt = bcrypt.genSaltSync(10);
@@ -31,6 +32,7 @@ router.post('/register', async(req,res)=>{
     }
 })
 
+//api for login
 router.get('/login', async (req,res)=>{
 
 
@@ -54,5 +56,32 @@ router.get('/login', async (req,res)=>{
     }
 })
 
+//api to get a post
+
+router.get('/post', async (req,res)=>{
+
+    try{
+        const collection = await db.collection("items")
+        const post = await collection.findOne({
+            _id: req.body.username
+        })
+        return res.status(200).json(post)
+
+    }catch(err){
+        console.log(err)
+    }
+})
+
+//get all items
+
+router.get('/home', async(req,res)=>{
+    try{
+    const collection = await db.collection('items')
+    const posts = await collection.find({}).toArray()
+    res.send(posts).status(200);
+    }catch(err){
+        console.log(err)
+    }
+})
 
 export default router; 
