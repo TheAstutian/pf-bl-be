@@ -25,7 +25,10 @@ router.post('/register', async(req,res)=>{
             password:passwordHash
         }
         let collection = await db.collection('users');//create collection of users
-        let result = await collection.insertOne(newDocument);
+        const user = await collection.findOne({username:req.body.username})
+        if(user) {
+            return res.status(400).json("User already exists")
+        } else await collection.insertOne(newDocument);
         return res.status(204).json("New user successfully created")
     } catch(err){
         console.error(err)
@@ -33,9 +36,8 @@ router.post('/register', async(req,res)=>{
 })
 
 //api for login
-router.get('/login', async (req,res)=>{
-
-
+router.post('/login', async (req,res)=>{
+ 
     try{
         const collection = await db.collection("users");
         const user = await collection.findOne({
@@ -50,7 +52,8 @@ router.get('/login', async (req,res)=>{
          if(!validatePassword){
             return res.status(401).json("Invalid  password")
         }
-        return res.status(200).json('Login successful')
+        
+        return res.status(200).json(user.username)
     }catch(err){
         console.error(err)
     }
