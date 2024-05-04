@@ -87,4 +87,30 @@ router.get('/home', async(req,res)=>{
     }
 })
 
+//insert new post
+
+router.post('/write', async (req,res)=>{
+
+    try{
+
+        let newDocument={
+            title:req.body.title,
+            subTitle:req.body.subTitle,
+            quote: req.body.quote,
+            quoter: req.body.quoter,
+            model: req.body.model,
+            imglnk:req.body.imglnk,
+            date:req.body.date
+
+        }
+        let collection = await db.collection('items');//create collection of users
+        await collection.insertOne(newDocument);
+        return res.status(200).json("new post created successfully")
+    }catch(err){
+        console.log(err)
+    }
+
+})
+
+
 export default router; 
