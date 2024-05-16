@@ -143,6 +143,36 @@ router.delete("/delete/:id", async (req,res)=>{
     }
 })
 
+//update Post
 
+router.patch("/update/:id", async (req,res)=>{
+    
+    try{
+        const query = {_id: new ObjectId(req.body.id)}
+        
+        const updates = {
+            $set:{
+                title:req.body.title,
+                subTitle:req.body.subTitle,
+                quote: req.body.quote,
+                quoter: req.body.quoter,
+                model: req.body.model,
+                imglnk:req.body.imglnk,
+                tags: req.body.tags,
+
+            }
+        }
+        let collection = await db.collection("items")
+        let result = await collection.updateOne(query, updates);
+        res.send(result).status(200);
+
+
+    } catch(err){
+        console.log(err)
+        res.status(500).send("Error updating post")
+    }
+
+
+})
 
 export default router; 
