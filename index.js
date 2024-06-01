@@ -5,6 +5,7 @@ import router from './routes.js';
 
 
 const app = express(); 
+const port = process.env.PORT || 4000; 
 app.use(cors())
 app.use(express.json())
 
@@ -13,6 +14,6 @@ app.use( router)
 
 
 
-app.listen(8000, ()=>{
+app.listen(port, ()=>{
     console.log("App is up and running")
 })
