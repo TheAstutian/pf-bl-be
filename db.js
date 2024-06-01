@@ -13,28 +13,7 @@ const client = new MongoClient(uri , {
         strict: true,
         deprecationErrors: true,
     }
-});
-
-/*async function run(){
-    try{
-        const database = client.db('personal-blog')
-        const posts = database.collection('items')
-
-        const query = { id: 1}
-
-        const options = {
-            projection: {_id:0, title:1, username:1, password:1}
-        }
-
-        const post = await posts.findOne(query,options)
-        console.log(post)
- 
-     } finally{
-        await client.close();
-    }
-}
-
-run().catch(console.dir) */
+}); 
 
 try{
     await client.connect();
